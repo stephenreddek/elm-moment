@@ -25,8 +25,7 @@ import Platform exposing (Task)
 
 
 -- hack for making sure MomentJS.js is included
-
-import Native.MomentJS
+-- import Native.MomentJS
 
 
 {-| The basic moment type

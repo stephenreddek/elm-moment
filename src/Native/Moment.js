@@ -1,107 +1,57 @@
-var MomentApi = function(Moment){
-    var getCurrent = function(){
-        return function(){
-            return Moment().toObject();
-        };
-    };
+var _stephenreddek$elm_moment$Native_Moment = function(Moment){
+    function getCurrent(){
+        return Moment().toObject();
+    }
 
-    var format = function(){
-        return function(moment) {
-            return Moment(moment).format().toObject();
-        };
-    };
+    function format(moment) {
+        return Moment(moment).format().toObject();
+    }
 
-    var formatString = function(){
-        return function(formatString, moment) {
-            if (typeof formatString === "undefined" || formatString === null){
-                return Moment(moment).format();
-            }
-            return Moment(moment).format(formatString);
-        };
-    };
+    function formatString(formatString, moment) {
+        if (typeof formatString === "undefined" || formatString === null){
+            return Moment(moment).format();
+        }
+        return Moment(moment).format(formatString);
+    }
 
-    var add = function() {
-        return function(first, second){
-            var m = Moment(first);
-            m.add(second);
+    function add(first, second){
+        var m = Moment(first);
+        m.add(second);
 
-            return m.toObject();
-        };
-    };
+        return m.toObject();
+    }
 
-    var subtract = function() {
-        return function(first, second){
-            var m = Moment(first);
-            m.subtract(second);
+    function subtract(first, second){
+        var m = Moment(first);
+        m.subtract(second);
 
-            return m.toObject();
-        };
-    };
+        return m.toObject();
+    }
 
-    var from = function() {
-        return function(first, second){
-            var m = Moment(first);
-            return m.from(Moment(second));
-        };
-    };
+    function from(first, second){
+        var m = Moment(first);
+        return m.from(Moment(second));
+    }
 
-    var isBefore = function() {
-        return function(first, second){
-            var m = Moment(first);
-            return m.isBefore(Moment(second));
-        };
-    };
+    function isBefore(first, second) {
+        var m = Moment(first);
+        return m.isBefore(Moment(second));
+    }
 
-    var isAfter = function() {
-        return function(first, second){
-            var m = Moment(first);
-            return m.isAfter(Moment(second));
-        };
-    };
+    function isAfter(first, second){
+        var m = Moment(first);
+        return m.isAfter(Moment(second));
+    }
 
     return {
         getCurrent: getCurrent,
         format: format,
-        formatString: formatString,
-        add: add,
-        subtract: subtract,
-        from: from,
-        isBefore: isBefore,
-        isAfter: isAfter
+        formatString: F2(formatString),
+        add: F2(add),
+        subtract: F2(subtract),
+        from: F2(from),
+        isBefore: F2(isBefore),
+        isAfter: F2(isAfter)
     };
 
-};
-
-var make = function make(localRuntime) {
-    localRuntime.Native = localRuntime.Native || {};
-    localRuntime.Native.Moment = localRuntime.Native.Moment || {};
-
-    if (localRuntime.Native.Moment.values) {
-        return localRuntime.Native.Moment.values;
-    }
-
-    var Moment = require('moment');
-    var API = MomentApi(Moment);
-
-
-    return {
-        'getCurrent': API.getCurrent(),
-        'formatString': F2(API.formatString()),
-        'format': API.format(),
-        'add': F2(API.add()),
-        'subtract': F2(API.subtract()),
-        'from': F2(API.from()),
-        'isBefore': F2(API.isBefore()),
-        'isAfter': F2(API.isAfter())
-    };
-};
-
-Elm.Native.Moment = {};
-Elm.Native.Moment.make = make;
-
-// shim for making require work on client and server
-if (typeof window.require === "undefined"){
-    window.require = function(name){
-        return window[name];
-    };
-};
+}(require('./momentJS.js'));
