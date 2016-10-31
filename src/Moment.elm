@@ -1,14 +1,35 @@
-module Moment (getCurrent, Moment, emptyMoment, format, formatString, add, subtract, from, isBefore, isAfter) where
+module Moment exposing (getCurrent, Moment, emptyMoment, format, formatString, add, subtract, from, isBefore, isAfter)
 
 {-|
 A Moment.js inspired library
+
+#Base type
+@docs Moment
+
+#initialization functions
+@docs getCurrent, emptyMoment
+
+#display functions
+@docs format, formatString, from
+
+#manipulation functions
+@docs add, subtract
+
+#comparison functions
+@docs isBefore, isAfter
+
 -}
 
 import Native.Moment
+import Platform exposing (Task)
+
+
 -- hack for making sure MomentJS.js is included
-import Native.MomentJS
+-- import Native.MomentJS
 
 
+{-| The basic moment type
+-}
 type alias Moment =
     { years : Int
     , months : Int
@@ -19,8 +40,10 @@ type alias Moment =
     , milliseconds : Int
     }
 
+
 {-| A moment with everything set to 0
 -}
+emptyMoment : Moment
 emptyMoment =
     { years = 0
     , months = 0
@@ -45,6 +68,7 @@ format : Moment -> String
 format =
     Native.Moment.format
 
+
 {-| Takes a format string and returns the moment as a formatted
 by that string
 -}
@@ -52,17 +76,20 @@ formatString : String -> Moment -> String
 formatString =
     Native.Moment.formatString
 
+
 {-| Add the second moment to the first
 -}
 add : Moment -> Moment -> Moment
 add =
     Native.Moment.add
 
+
 {-| Subtract the second moment from the first
 -}
 subtract : Moment -> Moment -> Moment
 subtract =
     Native.Moment.subtract
+
 
 {-| Returns a string in words of how long it is from the first
 moment to the second
